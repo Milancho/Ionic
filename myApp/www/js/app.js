@@ -1,39 +1,49 @@
-// Ionic Starter App
+angular.module('app', ['ionic'])
 
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic'])
+.config(function($stateProvider, $urlRouterProvider) {
 
-  .run(function ($ionicPlatform) {
-    $ionicPlatform.ready(function () {
-      if (window.cordova && window.cordova.plugins.Keyboard) {
-        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-        // for form inputs)
-        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-
-        // Don't remove this line unless you know what you are doing. It stops the viewport
-        // from snapping when text inputs are focused. Ionic handles this internally for
-        // a much nicer keyboard experience.
-        cordova.plugins.Keyboard.disableScroll(true);
-      }
-      if (window.StatusBar) {
-        StatusBar.styleDefault();
-      }
+  $stateProvider
+    .state('page1', {
+      url: "/page1",
+      templateUrl: "templates/page1.html",
+      controller: "Page1Ctrl"
+    })
+    .state('page2', {
+      url: "/page2",
+      templateUrl: "templates/page2.html",
+      controller: "Page2Ctrl"
     });
-  })
 
-angular.module("app", ['ionic'])
-  .controller('AppCtrl', function ($scope) {
-    $scope.data = {};
-    $scope.name = "World";
+  $urlRouterProvider.otherwise("/page1");
+})
 
-  $scope.saveName = function() {
-     if ($scope.data.firstName && $scope.data.lastName) {
-    $scope.name = $scope.data.firstName + " " + $scope.data.lastName;
-  } else {
-    alert("Please fill out the fields before submitting!");
-  }
-  };    
+.controller('Page1Ctrl', function($scope, $state, formData) {
+  $scope.user = {};
+   $scope.submitForm = function(user) {
+   if (user.firstName && user.lastName && user.comments) {
+     console.log("Submitting Form", user);
+        formData.updateForm(user);
+   console.log("Retrieving form from service", formData.getForm());
+   $state.go('page2');
+   } else {
+     alert("Please fill out some information for the user");
+   }
+ };
 
-  });
+})
+
+.controller('Page2Ctrl', function($scope, formData) {
+    $scope.user = formData.getForm();
+})
+
+.service('formData', function() {
+ return {
+   form: {},
+   getForm: function() {
+     return this.form;
+   },
+   updateForm: function(form) {
+     this.form = form;
+   }
+ }
+})

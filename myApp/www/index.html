@@ -25,7 +25,7 @@
 
 <body>
 
-  <ion-pane ng-app="app">
+  <!--<ion-pane ng-app="app">
     <ion-header-bar class="bar-positive">
       <h1 class="title">Using Angular with Ionic</h1>
     </ion-header-bar>
@@ -46,8 +46,53 @@
       <button ng-click="saveName()" class="button button-block button-positive">Submit</button>
 
     </ion-content>
-  </ion-pane>
+  </ion-pane>-->
+  <ion-pane ng-app="app">
 
+    <ion-nav-bar class="bar-positive">
+      <ion-nav-back-button>
+      </ion-nav-back-button>
+    </ion-nav-bar>
+
+    <ion-nav-view></ion-nav-view>
+
+    <script id="templates/page1.html" type="text/ng-template">
+      <ion-view view-title="Page 1">
+        <ion-content>
+          <h1>Page 1</h1>
+          <form ng-submit="submitForm(user)">
+            <ion-list>
+              <ion-item class="item-input">
+                <input type="text" ng-model="user.firstName" placeholder="First Name">
+              </ion-item>
+              <ion-item class="item-input">
+                <input type="text" ng-model="user.lastName" placeholder="Last Name">
+              </ion-item>
+              <ion-item class="item-input">
+                <textarea ng-model="user.comments" placeholder="Comments"></textarea>
+              </ion-item>
+              <input type="submit" class="button button-block button-positive" value="Submit">
+            </ion-list>
+          </form>
+
+        </ion-content>
+      </ion-view>
+    </script>
+
+    <script id="templates/page2.html" type="text/ng-template">
+      <ion-view view-title="Page 2">
+        <ion-content>
+          <h1>Page 2</h1>
+          <ion-list>
+            <ion-item>First Name: {{user.firstName}}</ion-item>
+            <ion-item>Last Name: {{user.lastName}}</ion-item>
+            <ion-item>Comments: {{user.comments}}</ion-item>
+          </ion-list>
+        </ion-content>
+      </ion-view>
+    </script>
+
+  </ion-pane>
 </body>
 
 </html>
