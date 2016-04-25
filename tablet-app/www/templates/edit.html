@@ -1,0 +1,85 @@
+<ion-view view-title="{{title}}">
+    <ion-content>
+        <div class="list">
+            <div>
+                <button class="button button-small" type="button" ng-click="form.groups[0].items[0].Answer='1012986440021'; submit('Load')">Test1</button>
+            </div>
+            <div ng-repeat="(gkey, group) in form.groups">
+                <div class="item item-divider">
+                    {{group.NAME}}
+                </div>
+                <div ng-repeat="(ikey, item) in group.items">
+                    <div class="item item-input" ng-if="[enumValueTypes.VTText].indexOf(item.ValueType)>-1">
+                        <!-- TEXT -->
+                        <i ng-click="myClick('{{item.InfoMsg}}')" class="icon {{iconValues[item.ImageIndex].name}}" ng-if="item.ImageIndex>-1"></i>
+                        <!--<dynamic-icon content="{{item.ImageIndex}}"></dynamic-icon>-->
+                        <!--<span class="assertive" ng-if="item.InfoMsg != 'Required'">&nbsp;{{item.InfoMsg}}&nbsp;</span>-->
+                        <span class="input-label">{{item.Caption}}</span>
+                        <input type="text" ng-model="item.Answer" ng-blur="conditionalSubmit(item)" />
+                    </div>
+                    <div class="item item-input item-select" ng-if="[enumValueTypes.VTComboFromDB, enumValueTypes.VTComboFromCode].indexOf(item.ValueType)>-1">
+                        <!-- COMBO -->
+                        <i class="icon ion-android-star" ng-if="item.ImageIndex>-1"></i><span class="input-label">{{item.Caption}}</span>
+                        <select ng-model="item.AnswerValueID" ng-blur="conditionalSubmit(item)">
+                            <option ng-repeat="comboItem in form.comboAnswers" value="{{comboItem.ComboAnswerID}}" ng-if="comboItem.Item_Id==item.Item_Id">{{comboItem.Answer}}</option>
+                        </select>
+                    </div>
+                    <div class="item item-input" ng-if="[enumValueTypes.VTInteger].indexOf(item.ValueType)>-1">
+                        <!-- INTEGER -->
+                        <i ng-click="myClick({{item.InfoMsg}})" class="icon {{iconValues[item.ImageIndex].name}}" ng-if="item.ImageIndex>-1"></i>
+                        <span class="assertive" ng-if="item.InfoMsg != 'Required'">&nbsp;{{item.InfoMsg}}&nbsp;</span>
+                        <span class="input-label">{{item.Caption}}</span>
+                        <input type="number" value="{{item.AnswerValueID}}" ng-model="item.AnswerValueID" ng-blur="conditionalSubmit(item)" />
+                    </div>
+                    <div class="item item-input" ng-if="[enumValueTypes.VTDecimal].indexOf(item.ValueType)>-1">
+                        <!-- DECIMAL -->
+                        <i ng-click="myClick({{item.InfoMsg}})" class="icon {{iconValues[item.ImageIndex].name}}" ng-if="item.ImageIndex>-1"></i>
+                        <span class="assertive" ng-if="item.InfoMsg != 'Required'">&nbsp;{{item.InfoMsg}}&nbsp;</span>
+                        <span class="input-label">{{item.Caption}}</span>
+                        <input type="number" decimals="2" value="{{item.AnswerValueID}}" ng-model="item.AnswerValueID" ng-blur="conditionalSubmit(item)" />
+                    </div>
+                    <div class="item item-input" ng-if="[enumValueTypes.VTDateCombo].indexOf(item.ValueType)>-1">
+                        <!-- DATE COMBO -->
+                        <i ng-click="myClick({{item.InfoMsg}})" class="icon {{iconValues[item.ImageIndex].name}}" ng-if="item.ImageIndex>-1"></i>
+                        <span class="assertive" ng-if="item.InfoMsg != 'Required'">&nbsp;{{item.InfoMsg}}&nbsp;</span>
+                        <span class="input-label">{{item.Caption}}</span>
+                            <!--<ionic-datepicker input-obj="datepickerObject[{{item.Item_Id}}]">
+                                <button ng-click="openDatePicker()" ng-model="item.AnswerValueID" class="button button-block button-positive"> {{datepickerObject.inputDate | date:'dd/MM/yyyy'}}</button>
+                            </ionic-datepicker>
+                        <input type="text" ng-click="openDate()" ng-model="item.AnswerValueID" />-->
+                        <input type="text" date="dd/MM/yyyy" ng-click="openDatePicker({{gkey}}, {{ikey}}, {{item}})" ng-model="item.AnswerValueID" />
+                    </div>
+                    <label class="item item-input" ng-if="[0,6,7,1,2,11,8].indexOf(item.ValueType)==-1">
+                        <!-- NOT EXISTS -->
+                        <span class="input-label"><b style="color:Red">{{item.Caption}}</b></span>
+                    </label>
+                    <!--<div class="item item-input item-select" ng-if="item.type=='Zoom'">-->
+                    <label class="item item-input" ng-if="[enumValueTypes.VTZoomMultiChoice].indexOf(item.ValueType)>-1">
+                        <!-- NOT EXISTS -->
+                        <span class="input-label">{{item.caption}}</span>
+                        <!--<input ion-autocomplete type="text" readonly="readonly" class="ion-autocomplete" autocomplete="off" ng-model="data['zoom']" 
+                    items-method="callbackMethod(query)" 
+                    items-method-value-key="items" 
+                    item-value-key="name" 
+                    item-view-value-key="view" 
+                    items-clicked-method="clickedMethod(callback)" 
+                    items-removed-method="removedMethod(callback)" 
+                    component-id="{{item.componentId}}" 
+                    placeholder="Enter the query to search for ..." 
+                    template-url="" 
+                    loading-icon="crescent" 
+                    />-->
+                        <input ion-autocomplete type="text" readonly="readonly" class="ion-autocomplete" autocomplete="off" ng-model="item.AnswerValueID" item-value-key="id" item-view-value-key="name" items-method="callbackMethod(query)" items-method-value-key="items" placeholder="Enter test query ..." items-clicked-method="clickedMethod(callback)" items-removed-method="removedMethod(callback)" max-selected-items="3" />
+                    </label>
+                </div>
+            </div>
+            <div class="item" ng-if="form.groups">
+                <button class="button button-assertive" type="button"><i class="icon ion-close"></i> Cancel</button>
+                <button class="button button-positive" type="button" ng-click="submit('Save')"><i class="icon ion-checkmark"></i> Save</button>
+            </div>
+            <div>
+                <button class="button button-small" type="button" ng-click="form.groups[0].items[0].Answer='1012986440021'; submit('Load')">Test1</button>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
