@@ -17,6 +17,7 @@ angular.module('app', ['ionic'])
   $urlRouterProvider.otherwise("/page1");
 })
 
+
 .controller('Page1Ctrl', function($scope, $state, formData) {
   $scope.user = {};
    $scope.submitForm = function(user) {
@@ -47,3 +48,6 @@ angular.module('app', ['ionic'])
    }
  }
 })
+
+
+
