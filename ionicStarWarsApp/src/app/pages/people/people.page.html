@@ -6,7 +6,7 @@
 
 <ion-content>
   <ion-list>
-    <ion-item button detail lines="inset" *ngFor="let person of (people | async)?.results">
+    <ion-item button detail lines="inset" *ngFor="let person of (people | async)?.results" (click)="openDetails(person)">
       {{ person.name }}
     </ion-item>
   </ion-list>

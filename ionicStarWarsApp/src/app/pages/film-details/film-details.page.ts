@@ -17,6 +17,7 @@ export class FilmDetailsPage implements OnInit {
     let id = this.activatedRoute.snapshot.paramMap.get('id');
     this.api.getFilm(id).subscribe(res => {
       this.film = res;
+      console.log("film:", this.film)
     });
   }
 
